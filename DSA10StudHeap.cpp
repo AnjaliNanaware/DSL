@@ -36,11 +36,7 @@ void buildMaxHeap(int arr[], int n) {
     for (int i = startIdx; i >= 0; i--) {
         maxHeapify(arr, n, i);
     }
-    
-    for(int i=0;i<n;i++)
-    {
-    	cout<<arr[i]<<"\n";
-	}
+
 }
 
 // Function to heapify the array as a min heap
@@ -76,11 +72,7 @@ void buildMinHeap(int arr[], int n) {
     for (int i = startIdx; i >= 0; i--) {
         minHeapify(arr, n, i);
     }
-    
-    for(int i=0;i<n;i++)
-    {
-    	cout<<arr[i]<<"\n";
-	}
+
 }
 
 // Function to find maximum and minimum marks
