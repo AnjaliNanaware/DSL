@@ -2,78 +2,117 @@
 Find out maximum and minimum marks obtained in that subject. Use heap data structure. Analyze the algorithm.*/
 
 #include <iostream>
-#include <vector>
-#include <algorithm>
-
 using namespace std;
+// Function to heapify the array as a max heap
+void maxHeapify(int arr[], int n, int i) {
+    int largest = i; // Initialize largest as root
+    int left = 2 * i + 1; // Left child
+    int right = 2 * i + 2; // Right child
 
-class Heap {
-private:
-    vector<int> heap;
+    // If left child is larger than root
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
 
-    // Helper functions for heap operations
-    int parent(int i) { return (i - 1) / 2; }
-    int leftChild(int i) { return 2 * i + 1; }
-    int rightChild(int i) { return 2 * i + 2; }
+    // If right child is larger than largest so far
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
 
-    // Heapify up operation
-    void heapifyUp(int i) {
-        while (i > 0 && heap[parent(i)] < heap[i]) {
-            swap(heap[parent(i)], heap[i]);
-            i = parent(i);
-        }
+    // If largest is not root
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+
+        // Recursively heapify the affected sub-tree
+        maxHeapify(arr, n, largest);
     }
+}
 
-   
-public:
-    // Insert value into heap
-    void insert(int value) {
-        heap.push_back(value);
-        heapifyUp(heap.size() - 1);
-    }
-    // Get maximum value from heap
-    int getMax() {
-        return heap.front();
-    }
+// Function to build max heap
+void buildMaxHeap(int arr[], int n) {
+    // Index of the last non-leaf node
+    int startIdx = (n / 2) - 1;
 
-    // Get minimum value from heap
-    int getMin() {
-        return *min_element(heap.begin(), heap.end());
+    // Perform reverse level order traversal from the last non-leaf node
+    // and heapify each node
+    for (int i = startIdx; i >= 0; i--) {
+        maxHeapify(arr, n, i);
     }
+    
+    for(int i=0;i<n;i++)
+    {
+    	cout<<arr[i]<<"\n";
+	}
+}
 
-    // Check if heap is empty
-    bool isEmpty() {
-        return heap.empty();
+// Function to heapify the array as a min heap
+void minHeapify(int arr[], int n, int i) {
+    int smallest = i; // Initialize smallest as root
+    int left = 2 * i + 1; // Left child
+    int right = 2 * i + 2; // Right child
+
+    // If left child is smaller than root
+    if (left < n && arr[left] < arr[smallest])
+        smallest = left;
+
+    // If right child is smaller than smallest so far
+    if (right < n && arr[right] < arr[smallest])
+        smallest = right;
+
+    // If smallest is not root
+    if (smallest != i) {
+        swap(arr[i], arr[smallest]);
+
+        // Recursively heapify the affected sub-tree
+        minHeapify(arr, n, smallest);
     }
-};
+}
+
+// Function to build min heap
+void buildMinHeap(int arr[], int n) {
+    // Index of the last non-leaf node
+    int startIdx = (n / 2) - 1;
+
+    // Perform reverse level order traversal from the last non-leaf node
+    // and heapify each node
+    for (int i = startIdx; i >= 0; i--) {
+        minHeapify(arr, n, i);
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+    	cout<<arr[i]<<"\n";
+	}
+}
+
+// Function to find maximum and minimum marks
+void findMaxMinMarks(int arr[], int n) {
+    // Build max heap
+    buildMaxHeap(arr, n);
+
+    // Maximum marks will be at root of max heap
+    cout << "Maximum Marks: " << arr[0] << std::endl;
+
+    // Build min heap
+    buildMinHeap(arr, n);
+
+    // Minimum marks will be at root of min heap
+    cout << "Minimum Marks: " << arr[0] << std::endl;
+}
 
 int main() {
-    Heap marksHeap;
-
-    // Input number of students
+    int n;
     cout << "Enter the number of students: ";
-    int numStudents;
-    cin >> numStudents;
+    cin >> n;
 
-    // Input marks obtained by students
-    cout << "Enter marks obtained by students:\n";
-    for (int i = 0; i < numStudents; ++i) {
-        int marks;
-        cin >> marks;
-        marksHeap.insert(marks);
+    int *marks = new int[n];
+
+    cout << "Enter the marks obtained by each student:\n";
+    for (int i = 0; i < n; ++i) {
+        cout << "Student " << i + 1 << ": ";
+    	cin >> marks[i];
     }
 
-    // Calculate and display maximum and minimum marks
-    if (!marksHeap.isEmpty()) {
-        int maxMarks = marksHeap.getMax();
-        int minMarks = marksHeap.getMin();
+    findMaxMinMarks(marks, n);
 
-        cout << "Maximum marks obtained: " << maxMarks << endl;
-        cout << "Minimum marks obtained: " << minMarks << endl;
-        
-    } else {
-        cout << "No marks entered!\n";
-    }
-
+    delete[] marks;
     return 0;
 }
