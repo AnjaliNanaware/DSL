@@ -1,18 +1,25 @@
-//Given sequence k = k1 <k2< …… <kn of n sorted keys, with a search probability pi for each key ki .
+//Given sequence k = k1 <k2< â€¦â€¦ <kn of n sorted keys, with a search probability pi for each key ki .
 // Build the Binary search tree that has the least search cost given the access probability for each key? 
 
 #include <iostream>
-#include <vector>
 #include <limits>
 using namespace std;
+
 struct Node {
     int key;
     double probability;
     Node* left;
     Node* right;
-    Node(int k, double p) : key(k), probability(p), left(NULL), right(NULL) {}
+   Node(int k, double p) 
+	{
+		key=k;
+		probability=p;
+		left=NULL;
+		right=NULL;
+	}
 };
-Node* constructOptimalBST(const vector<int>& keys, const vector<double>& probabilities, int start, int end) {
+
+Node* constructOptimalBST(int keys[], double probabilities[], int start, int end) {
     if (start > end) {
         return NULL;
     }
@@ -40,6 +47,7 @@ Node* constructOptimalBST(const vector<int>& keys, const vector<double>& probabi
 
     return root;
 }
+
 void inorderTraversal(Node* root) {
     if (root == NULL) {
         return;
@@ -48,12 +56,13 @@ void inorderTraversal(Node* root) {
     cout << "(" << root->key << ", " << root->probability << ") ";
     inorderTraversal(root->right);
 }
+
 int main() {
     int n;
     cout << "Enter the number of keys: ";
     cin >> n;
-    vector<int> keys(n);
-    vector<double> probabilities(n);
+    int keys[n];
+    double probabilities[n];
     cout << "Enter the keys and their probabilities:" << endl;
     for (int i = 0; i < n; ++i) {
         cin >> keys[i] >> probabilities[i];
@@ -64,6 +73,7 @@ int main() {
     cout << endl;
     return 0;
 }
+
 //output:
 //
 //Enter the number of keys: 3
