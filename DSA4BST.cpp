@@ -75,19 +75,7 @@ void printMenu() {
     cout << "5. Search a value" << endl;
     cout << "6. Exit" << endl;
 }
-//
-//	void inorder(Node* node)
-//	{
-//		if(node ==NULL)
-//		{
-//			return ;
-//		}
-//		
-//		inorder(node->left);
-//		cout<<node->data<<" ";
-//		inorder(node->right);
-//	}
-//	
+
 int main() {
     Node* root = NULL;
     int choice = 0;
@@ -120,7 +108,7 @@ int main() {
                 else cout << "The value " << value << " is not present in the tree." << endl;
                 break;
             case 6:
-                inorder(root);
+		cout<<"exit";
                 break;
             default:
                 cout << "Error: Invalid choice! Please enter a valid choice." << endl;
